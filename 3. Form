@@ -1,0 +1,30 @@
+CREATE TABLE IF NOT EXISTS `hw2`.`Clients` (
+  `Client_id` INT NOT NULL AUTO_INCREMENT,
+  `Client_name` VARCHAR(45) NOT NULL,
+  `Client_street` VARCHAR(45) NOT NULL,
+  `Client_house` INT NOT NULL,
+  PRIMARY KEY (`Client_id`))
+ENGINE = InnoDB
+CREATE TABLE IF NOT EXISTS `hw2`.`Order_details` (
+  `Order_id` INT NOT NULL AUTO_INCREMENT,
+  `Order_date` DATETIME NOT NULL,
+  `Client_id` INT NOT NULL,
+  PRIMARY KEY (`Order_id`),
+  INDEX `fk_order_details-clients_idx` (`Client_id` ASC) VISIBLE,
+  CONSTRAINT `fk_order_details-clients`
+    FOREIGN KEY (`Client_id`)
+    REFERENCES `hw2`.`Clients` (`Client_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+CREATE TABLE IF NOT EXISTS `hw2`.`Orders` (
+  `Order_id` INT NOT NULL AUTO_INCREMENT,
+  `Product_name` VARCHAR(45) NOT NULL,
+  `Product_num` INT NOT NULL,
+  PRIMARY KEY (`Order_id`),
+  CONSTRAINT `fk_orders-order_details`
+    FOREIGN KEY (`Order_id`)
+    REFERENCES `hw2`.`Order_details` (`Order_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
